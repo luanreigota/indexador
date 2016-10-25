@@ -6,12 +6,19 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
-class Teste extends SimpleFileVisitor<Path> {
+class Analisador extends SimpleFileVisitor<Path> {
+
+	Indexator indexator;
+	
+	public Analisador(String diretorioDosIndices) {
+		System.out.println("instanciando o indexador");
+		indexator = new Indexator(diretorioDosIndices);
+	}
 
 	@Override
 	public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
 		// TODO Auto-generated method stub
-		System.out.println("Este é um arquivo: "+file.getFileName());
+		indexator.indexarArquivo(file.toFile());
 		return FileVisitResult.CONTINUE;
 	}
 
@@ -20,6 +27,14 @@ class Teste extends SimpleFileVisitor<Path> {
 		// TODO Auto-generated method stub
 		System.out.println("Pasta: "+dir);
 		return FileVisitResult.CONTINUE;
+	}
+	
+	@Override
+	public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+		// TODO Auto-generated method stub
+		System.out.println("fim");
+		indexator.finish();
+		return FileVisitResult.TERMINATE;
 	}
 
 }

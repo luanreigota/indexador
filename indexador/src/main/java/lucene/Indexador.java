@@ -19,20 +19,23 @@ import org.apache.tika.Tika;
 
 public class Indexador {
 
-	private String diretorioDosIndices = System.getProperty("user.home") + "/indices-lucene-portal";
+	// private String diretorioDosIndices = System.getProperty("user.home") +
+	// "/indices-lucene-portal";
+	private String diretorioDosIndices = System.getProperty("user.home") + "/index-teste/indices";
 
-	private String diretorioParaIndexar = System.getProperty("user.home") + "/bkp-portal-cmrj";
+	// private String diretorioParaIndexar = System.getProperty("user.home") +
+	// "/bkp-portal-cmrj";
+	private String diretorioParaIndexar = System.getProperty("user.home") + "/index-teste/pastaParaIndexar";
 
 	private IndexWriter writer;
 
 	private Tika tika;
-	
-	
+
 	public static void main(String[] args) {
 		Indexador indexador = new Indexador();
-		indexador.indexarArquivosDoDiretorio();;
+		indexador.indexarArquivosDoDiretorio();
 	}
-	
+
 	public void indexarArquivosDoDiretorio() {
 		try {
 			File diretorio = new File(diretorioDosIndices);
@@ -72,18 +75,23 @@ public class Indexador {
 	public void indexarArquivosDoDiretorio(File raiz) {
 		FilenameFilter filtro = new FilenameFilter() {
 			public boolean accept(File arquivo, String nome) {
-//				if (nome.toLowerCase().endsWith(".pdf") || nome.toLowerCase().endsWith(".odt")
-//						|| nome.toLowerCase().endsWith(".doc") || nome.toLowerCase().endsWith(".docx")
-//						|| nome.toLowerCase().endsWith(".ppt") || nome.toLowerCase().endsWith(".pptx")
-//						|| nome.toLowerCase().endsWith(".xls") || nome.toLowerCase().endsWith(".txt")
-//						|| nome.toLowerCase().endsWith(".rtf")) 
-				if (nome.toLowerCase().endsWith(".php")){
+				 if (nome.toLowerCase().endsWith(".pdf") ||
+				 nome.toLowerCase().endsWith(".odt")
+				 || nome.toLowerCase().endsWith(".doc") ||
+				 nome.toLowerCase().endsWith(".docx")
+				 || nome.toLowerCase().endsWith(".ppt") ||
+				 nome.toLowerCase().endsWith(".pptx")
+				 || nome.toLowerCase().endsWith(".xls") ||
+				 nome.toLowerCase().endsWith(".txt")
+				 || nome.toLowerCase().endsWith(".rtf")){
+//				if (nome.toLowerCase().endsWith(".php")) {
 					return true;
 				}
 				return false;
 			}
 		};
-		for (File arquivo : raiz.listFiles(filtro)) {
+		 for (File arquivo : raiz.listFiles(filtro)) {
+		
 			if (arquivo.isFile()) {
 				StringBuffer msg = new StringBuffer();
 				msg.append("Indexando o arquivo ");
@@ -95,7 +103,7 @@ public class Indexador {
 				try {
 					// {9}
 					String textoExtraido = getTika().parseToString(arquivo);
-//					System.out.println(textoExtraido);
+					 System.out.println(textoExtraido);
 					indexaArquivo(arquivo, textoExtraido);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -120,8 +128,6 @@ public class Indexador {
 		}
 	}
 
-	
-	
 	public Tika getTika() {
 		if (tika == null) {
 			tika = new Tika();
