@@ -1,6 +1,5 @@
 package lucene;
 
-import java.awt.Component;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -17,11 +16,14 @@ public class TesteMain {
 		chooserDiretorio.showOpenDialog(null);
 		String pasta = chooserDiretorio.getSelectedFile().getAbsolutePath();
 //		Path path = Paths.get(System.getProperty("user.home") + "/index-teste/pastaParaIndexar");
+		
+		
 		Path path = Paths.get(pasta);
 		String diretorioDosIndices = System.getProperty("user.home")+"/index-teste/indices";
+		
 		long inicio = System.currentTimeMillis();
 		try {
-			Files.walkFileTree(path, new Analisador(diretorioDosIndices));
+			Files.walkFileTree(path, new Analisador(diretorioDosIndices, path.toString()));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

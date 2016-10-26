@@ -35,7 +35,7 @@ public class Buscador {
 			Query consulta = parser.parse(parametro);
 			long inicio = System.currentTimeMillis();
 			// {4}
-			TopDocs resultado = buscador.search(consulta, 100);
+			TopDocs resultado = buscador.search(consulta, 10000);
 			long fim = System.currentTimeMillis();
 			int totalDeOcorrencias = resultado.totalHits;
 			System.out.println("Total de documentos encontrados:" + totalDeOcorrencias);
@@ -43,10 +43,11 @@ public class Buscador {
 			// {5}
 			for (ScoreDoc sd : resultado.scoreDocs) {
 				Document documento = buscador.doc(sd.doc);
-				System.out.println("Caminho:" + documento.get("caminho"));
-				System.out.println("Ultima modificacao:" + documento.get("UltimaModificacao"));
-				System.out.println("Score:" + sd.score);
-				System.out.println("--------");
+//				System.out.println("Caminho:" + documento.get("caminho"));
+				System.out.println(documento.get("caminho"));
+//				System.out.println("Ultima modificacao:" + documento.get("UltimaModificacao"));
+//				System.out.println("Score:" + sd.score);
+//				System.out.println("--------");
 			}
 			leitor.close();
 		} catch (Exception e) {
@@ -56,7 +57,18 @@ public class Buscador {
 
 	public static void main(String[] args) {
 		Buscador b = new Buscador();
-		String parametro = "juliana";
+//		String parametro = "$conn_DP || "
+//						+ "$conn_base_parlamentar ||"
+//						+ "$conn_cmrj_web ||"
+//						+ "$conn_comissao ||"
+//						+ "$conn_contratacao ||"
+//						+ "$conn_escala_eventos ||"
+//						+ "$conn_noticias ||"
+//						+ "$conn_programacao_tvcamara ||"
+//						+ "$conn_setores_cmrj ||"
+//						+ "$conn_tv_camara";
+		String parametro = "from";
+						
 		b.buscaComParser(parametro);
 	}
 }
