@@ -67,7 +67,7 @@ public class Buscador {
 //						+ "$conn_programacao_tvcamara ||"
 //						+ "$conn_setores_cmrj ||"
 //						+ "$conn_tv_camara";
-		String parametro = "from";
+		String parametro = "$sql";
 						
 		b.buscaComParser(parametro);
 	}
