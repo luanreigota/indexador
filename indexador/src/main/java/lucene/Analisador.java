@@ -33,15 +33,14 @@ class Analisador extends SimpleFileVisitor<Path> {
 		return FileVisitResult.CONTINUE;
 	}
 
+	
 	@Override
-	public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+	protected void finalize() throws Throwable {
 		// TODO Auto-generated method stub
-		if (pastaInicio == dir.toString()) {
-			indexator.finish();
-			System.out.println("fim");
-		}
-		// indexator.finish();
-		return FileVisitResult.CONTINUE;
+		
+		indexator.finish();
+		System.out.println("fim!");
+
 	}
 
 }
