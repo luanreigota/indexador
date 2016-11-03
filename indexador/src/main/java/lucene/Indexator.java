@@ -1,7 +1,13 @@
 package lucene;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 
 import org.apache.lucene.analysis.Analyzer;
@@ -11,14 +17,12 @@ import org.apache.lucene.document.TextField;
 import org.apache.lucene.document.Field.Store;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.index.IndexWriterConfig.OpenMode;
 import org.apache.lucene.store.Directory;
-import org.apache.lucene.store.SimpleFSDirectory;
-import org.apache.lucene.util.Version;
+import org.apache.lucene.store.FSDirectory;
 import org.apache.tika.Tika;
 
 public class Indexator {
-
-	private String diretorioDosIndices;
 
 	private IndexWriter writer;
 
@@ -26,13 +30,16 @@ public class Indexator {
 
 	public Indexator(String diretorioDosIndices) {
 		try {
-			this.diretorioDosIndices = diretorioDosIndices;
-			File diretorio = new File(diretorioDosIndices);
-			apagarIndices(diretorio);
-			Directory doc = new SimpleFSDirectory(diretorio);
-			Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_47);
-			IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_47, analyzer);
-			writer = new IndexWriter(doc, config);
+			Directory doc = FSDirectory.open(Paths.get(diretorioDosIndices));
+			Analyzer analyzer = new StandardAnalyzer();
+			IndexWriterConfig iwc = new IndexWriterConfig(analyzer);
+			
+			//cria um novo index no diretório, removendo qualquer indice criado anteriormente
+			iwc.setOpenMode(OpenMode.CREATE);
+			
+			writer = new IndexWriter(doc, iwc);
+			
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -46,43 +53,38 @@ public class Indexator {
 		msg.append(arquivo.length() / 1000);
 		msg.append("kb");
 		System.out.println(msg);
-		try {
+		try(InputStream stream = Files.newInputStream(arquivo.toPath())) {
 			SimpleDateFormat formatador = new SimpleDateFormat("yyyyMMdd");
-			
+
 			System.out.println(arquivo.getAbsolutePath());
-			
+
 			Document document = new Document();
 			document.add(new TextField("UltimaModificacao", formatador.format(arquivo.lastModified()), Store.YES));
 			document.add(new TextField("caminho", arquivo.getAbsolutePath(), Store.YES));
-			document.add(new TextField("texto", getTika().parseToString(arquivo), Store.YES));
+//			document.add(new TextField("texto", getTika().parseToString(arquivo), Store.YES));
+			document.add(new TextField("texto", new BufferedReader(new InputStreamReader(stream, StandardCharsets.ISO_8859_1))));
 			try {
 				writer.addDocument(document);
 			} catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();
 			}
-			
+
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
 
 	}
+	
 
-	public void finish() throws IOException {
-		writer.commit();
+	@Override
+	protected void finalize() throws Throwable {
+		// TODO Auto-generated method stub
 		writer.close();
+		System.out.println("fim!");
 	}
-
-	public void apagarIndices(File diretorio) {
-		if (diretorio.exists()) {
-			File arquivos[] = diretorio.listFiles();
-			for (File arquivo : arquivos) {
-				arquivo.delete();
-			}
-		}
-
-	}
+	
 
 	public Tika getTika() {
 		if (tika == null) {

@@ -1,8 +1,7 @@
 package lucene;
 
-import java.io.File;
+import java.nio.file.Paths;
 
-import javax.swing.JOptionPane;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -14,23 +13,20 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
-import org.apache.lucene.store.Directory;
-import org.apache.lucene.store.SimpleFSDirectory;
-import org.apache.lucene.util.Version;
+import org.apache.lucene.store.FSDirectory;
 
 public class Buscador {
 	private String diretorioDoIndice = System.getProperty("user.home") + "/index-teste/indices";
 
 	public void buscaComParser(String parametro) {
 		try {
-			Directory diretorio = new SimpleFSDirectory(new File(diretorioDoIndice));
 			// {1}
-			IndexReader leitor = DirectoryReader.open(diretorio);
+			IndexReader leitor = DirectoryReader.open(FSDirectory.open(Paths.get(diretorioDoIndice)));
 			// {2}
 			IndexSearcher buscador = new IndexSearcher(leitor);
-			Analyzer analisador = new StandardAnalyzer(Version.LUCENE_47);
+			Analyzer analisador = new StandardAnalyzer();
 			// {3}
-			QueryParser parser = new QueryParser(Version.LUCENE_47, "texto", analisador);
+			QueryParser parser = new QueryParser("texto", analisador);
 			
 			Query consulta = parser.parse(parametro);
 			long inicio = System.currentTimeMillis();
@@ -67,7 +63,7 @@ public class Buscador {
 //						+ "$conn_programacao_tvcamara ||"
 //						+ "$conn_setores_cmrj ||"
 //						+ "$conn_tv_camara";
-		String parametro = "Juliana ";
+		String parametro = "$conn_base_parlamentar ";
 						
 		b.buscaComParser(parametro);
 	}

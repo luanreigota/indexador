@@ -27,7 +27,8 @@ public class TesteMain {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
-			analisador.finalize();
+//			analisador.finalize();
+			analisador.indexator.finalize();
 		}
 		long fim = System.currentTimeMillis();
 		System.out.println("tempo para indexar: " + ((fim - inicio) / 1000) + "s");

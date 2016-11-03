@@ -34,13 +34,13 @@ class Analisador extends SimpleFileVisitor<Path> {
 	}
 
 	
-	@Override
-	protected void finalize() throws Throwable {
-		// TODO Auto-generated method stub
-		
-		indexator.finish();
-		System.out.println("fim!");
-
-	}
+//	@Override
+//	protected void finalize() throws Throwable {
+//		// TODO Auto-generated method stub
+//		
+//		indexator.finalize();
+//		System.out.println("fim!");
+//
+//	}
 
 }
