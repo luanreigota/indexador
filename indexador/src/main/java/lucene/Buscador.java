@@ -65,7 +65,7 @@ public class Buscador {
 //						+ "$conn_programacao_tvcamara ||"
 //						+ "$conn_setores_cmrj ||"
 //						+ "$conn_tv_camara";
-		String parametro = "\"clique aqui para ativar\"";
+		String parametro = "\"cadastro no portal da CMRJ\"";
 						
 		b.buscaComParser(parametro);
 	}

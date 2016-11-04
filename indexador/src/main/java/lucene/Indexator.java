@@ -33,13 +33,13 @@ public class Indexator {
 			Directory doc = FSDirectory.open(Paths.get(diretorioDosIndices));
 			Analyzer analyzer = new StandardAnalyzer();
 			IndexWriterConfig iwc = new IndexWriterConfig(analyzer);
-			
-			//cria um novo index no diretório, removendo qualquer indice criado anteriormente
+
+			// cria um novo index no diretório, removendo qualquer indice criado
+			// anteriormente
 			iwc.setOpenMode(OpenMode.CREATE);
-			
+
 			writer = new IndexWriter(doc, iwc);
-			
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -53,7 +53,7 @@ public class Indexator {
 		msg.append(arquivo.length() / 1000);
 		msg.append("kb");
 		System.out.println(msg);
-		try(InputStream stream = Files.newInputStream(arquivo.toPath())) {
+		try (InputStream stream = Files.newInputStream(arquivo.toPath())) {
 			SimpleDateFormat formatador = new SimpleDateFormat("yyyyMMdd");
 
 			System.out.println(arquivo.getAbsolutePath());
@@ -61,8 +61,10 @@ public class Indexator {
 			Document document = new Document();
 			document.add(new TextField("UltimaModificacao", formatador.format(arquivo.lastModified()), Store.YES));
 			document.add(new TextField("caminho", arquivo.getAbsolutePath(), Store.YES));
-//			document.add(new TextField("texto", getTika().parseToString(arquivo), Store.YES));
-			document.add(new TextField("texto", new BufferedReader(new InputStreamReader(stream, StandardCharsets.ISO_8859_1))));
+			// document.add(new TextField("texto",
+			// getTika().parseToString(arquivo), Store.YES));
+			document.add(new TextField("texto",
+					new BufferedReader(new InputStreamReader(stream, StandardCharsets.ISO_8859_1))));
 			try {
 				writer.addDocument(document);
 			} catch (Exception e) {
@@ -76,7 +78,6 @@ public class Indexator {
 		}
 
 	}
-	
 
 	@Override
 	protected void finalize() throws Throwable {
@@ -84,7 +85,6 @@ public class Indexator {
 		writer.close();
 		System.out.println("fim!");
 	}
-	
 
 	public Tika getTika() {
 		if (tika == null) {
