@@ -65,7 +65,8 @@ public class Buscador {
 //						+ "$conn_programacao_tvcamara ||"
 //						+ "$conn_setores_cmrj ||"
 //						+ "$conn_tv_camara";
-		String parametro = "\"cadastro no portal da CMRJ\"";
+//		String parametro = "\"cadastro no portal da CMRJ\"";
+		String parametro = "inativo";
 						
 		b.buscaComParser(parametro);
 	}
