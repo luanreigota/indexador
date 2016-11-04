@@ -10,6 +10,7 @@ import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.PhraseQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
@@ -27,6 +28,7 @@ public class Buscador {
 			Analyzer analisador = new StandardAnalyzer();
 			// {3}
 			QueryParser parser = new QueryParser("texto", analisador);
+			
 			
 			Query consulta = parser.parse(parametro);
 			long inicio = System.currentTimeMillis();
@@ -63,7 +65,7 @@ public class Buscador {
 //						+ "$conn_programacao_tvcamara ||"
 //						+ "$conn_setores_cmrj ||"
 //						+ "$conn_tv_camara";
-		String parametro = "$conn_base_parlamentar ";
+		String parametro = "\"clique aqui para ativar\"";
 						
 		b.buscaComParser(parametro);
 	}
