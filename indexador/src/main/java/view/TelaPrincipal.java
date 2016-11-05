@@ -8,7 +8,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JPopupMenu;
 
-import lucene.TesteMain;
+import lucene.ExecutaIndexacao;
 
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
@@ -69,9 +69,8 @@ public class TelaPrincipal {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println("teste");
 				try {
-					new TesteMain();
+					new ExecutaIndexacao();
 				} catch (Throwable e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
