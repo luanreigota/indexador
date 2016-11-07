@@ -13,18 +13,15 @@ public class ExecutaIndexacao {
 	
 	
 	
-	public ExecutaIndexacao() throws Throwable {
+	public ExecutaIndexacao(String pastaParaIndexar, String pastaDosIndices) throws Throwable {
 		super();
 		// TODO Auto-generated constructor stub
-		JFileChooser chooserDiretorio = new JFileChooser();
-		chooserDiretorio.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); 
-		chooserDiretorio.showOpenDialog(null);
-		String pasta = chooserDiretorio.getSelectedFile().getAbsolutePath();
 		
-		Path path = Paths.get(pasta);
-		String diretorioDosIndices = System.getProperty("user.home")+"/index-teste/indices";
 		
-		Analisador analisador=new Analisador(diretorioDosIndices, path.toString());
+		Path path = Paths.get(pastaParaIndexar);
+//		String diretorioDosIndices = System.getProperty("user.home")+"/index-teste/indices";
+		
+		Analisador analisador=new Analisador(pastaDosIndices, path.toString());
 		
 		long inicio = System.currentTimeMillis();
 		try {

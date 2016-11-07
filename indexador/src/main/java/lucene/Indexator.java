@@ -34,7 +34,8 @@ public class Indexator {
 			Analyzer analyzer = new StandardAnalyzer();
 			IndexWriterConfig iwc = new IndexWriterConfig(analyzer);
 
-			// cria um novo index no diretório, removendo qualquer indice criado
+			// cria um novo index no diretório, removendo qualquer indice
+			// criado
 			// anteriormente
 			iwc.setOpenMode(OpenMode.CREATE);
 
@@ -61,10 +62,10 @@ public class Indexator {
 			Document document = new Document();
 			document.add(new TextField("UltimaModificacao", formatador.format(arquivo.lastModified()), Store.YES));
 			document.add(new TextField("caminho", arquivo.getAbsolutePath(), Store.YES));
+			document.add(new TextField("texto", getTika().parseToString(arquivo), Store.YES));
 			// document.add(new TextField("texto",
-			// getTika().parseToString(arquivo), Store.YES));
-			document.add(new TextField("texto",
-					new BufferedReader(new InputStreamReader(stream, StandardCharsets.ISO_8859_1))));
+			// new BufferedReader(new InputStreamReader(stream,
+			// StandardCharsets.ISO_8859_1))));
 			try {
 				writer.addDocument(document);
 			} catch (Exception e) {
