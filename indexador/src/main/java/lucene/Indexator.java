@@ -62,6 +62,7 @@ public class Indexator {
 			Document document = new Document();
 			document.add(new TextField("UltimaModificacao", formatador.format(arquivo.lastModified()), Store.YES));
 			document.add(new TextField("caminho", arquivo.getAbsolutePath(), Store.YES));
+			document.add(new TextField("nome", arquivo.getName(), Store.YES));
 			document.add(new TextField("texto", getTika().parseToString(arquivo), Store.YES));
 			// document.add(new TextField("texto",
 			// new BufferedReader(new InputStreamReader(stream,

@@ -48,6 +48,7 @@ public class Indexar extends JDialog {
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Indexar() {
+		String separator = System.getProperty("file.separator");
 		setModal(true);
 		setAlwaysOnTop(true);
 		setBounds(100, 100, 800, 500);
@@ -57,7 +58,7 @@ public class Indexar extends JDialog {
 		getContentPane().add(tabbedPane, BorderLayout.CENTER);
 
 		JPanel selecExtencao = new JPanel();
-		tabbedPane.addTab("Selecionar Extenção", null, selecExtencao, null);
+		tabbedPane.addTab("Selecionar Extenï¿½ï¿½o", null, selecExtencao, null);
 
 		DefaultListModel model = new DefaultListModel();
 		model.addElement(".php");
@@ -102,44 +103,10 @@ public class Indexar extends JDialog {
 		JPanel selecPastaParaIndexar = new JPanel();
 		tabbedPane.addTab("Selecionar pasta para Indexar", null, selecPastaParaIndexar, null);
 		selecPastaParaIndexar.setLayout(new FormLayout(new ColumnSpec[] {
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(139dlu;default)"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(205dlu;default)"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("default:grow"),},
+				ColumnSpec.decode("210px"),
+				ColumnSpec.decode("320px"),
+				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
+				ColumnSpec.decode("49px"),},
 			new RowSpec[] {
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				RowSpec.decode("max(19dlu;default)"),
@@ -157,15 +124,15 @@ public class Indexar extends JDialog {
 				FormSpecs.DEFAULT_ROWSPEC,}));
 		
 		JLabel lblSelecioneAPasta = new JLabel("Selecione a pasta que deseja indexar");
-		selecPastaParaIndexar.add(lblSelecioneAPasta, "4, 6");
+		selecPastaParaIndexar.add(lblSelecioneAPasta, "2, 6");
 		
 		textPastaParaIndexar = new JTextField();
 		textPastaParaIndexar.setText(System.getProperty("user.home"));
-		selecPastaParaIndexar.add(textPastaParaIndexar, "4, 14, left, default");
+		selecPastaParaIndexar.add(textPastaParaIndexar, "2, 14, left, center");
 		textPastaParaIndexar.setColumns(40);
 		
 		JButton btnSelecPasta = new JButton("");
-		btnSelecPasta.setIcon(new ImageIcon(Indexar.class.getResource("/javax/swing/plaf/metal/icons/ocean/file.gif")));
+		btnSelecPasta.setIcon(new ImageIcon(Indexar.class.getResource("/javax/swing/plaf/metal/icons/ocean/directory.gif")));
 		btnSelecPasta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -177,7 +144,7 @@ public class Indexar extends JDialog {
 				textPastaParaIndexar.setText(pasta);
 			}
 		});
-		selecPastaParaIndexar.add(btnSelecPasta, "6, 14");
+		selecPastaParaIndexar.add(btnSelecPasta, "4, 14");
 		tabbedPane.setEnabledAt(1, false);
 
 		JPanel selecPastaDosIndices = new JPanel();
@@ -207,12 +174,12 @@ public class Indexar extends JDialog {
 		selecPastaDosIndices.add(lblSelecioneAPasta_1, "2, 6");
 		
 		textPastaDosIndices = new JTextField();
-		textPastaDosIndices.setText(System.getProperty("user.home")+"\\indice");
+		textPastaDosIndices.setText(System.getProperty("user.home")+separator+"indice");
 		textPastaDosIndices.setColumns(40);
 		selecPastaDosIndices.add(textPastaDosIndices, "2, 14, left, center");
 		
 		JButton buttonSelecPastaIndice = new JButton("");
-		buttonSelecPastaIndice.setIcon(new ImageIcon(Indexar.class.getResource("/javax/swing/plaf/metal/icons/ocean/file.gif")));
+		buttonSelecPastaIndice.setIcon(new ImageIcon(Indexar.class.getResource("/javax/swing/plaf/metal/icons/ocean/directory.gif")));
 		buttonSelecPastaIndice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
