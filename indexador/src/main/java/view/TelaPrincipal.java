@@ -4,12 +4,14 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.util.List;
 
 import com.jgoodies.forms.layout.FormLayout;
@@ -30,7 +32,11 @@ import javax.swing.JScrollPane;
 import java.awt.BorderLayout;
 import javax.swing.JList;
 import javax.swing.ScrollPaneConstants;
+
+import org.apache.lucene.queryparser.classic.ParseException;
+
 import javax.swing.ListSelectionModel;
+import javax.swing.JSplitPane;
 
 public class TelaPrincipal {
 
@@ -118,7 +124,7 @@ public class TelaPrincipal {
 		topo.add(button, "3, 2");
 		
 		JPanel panel = new JPanel();
-		frame.getContentPane().add(panel, BorderLayout.WEST);
+		frame.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(new FormLayout(new ColumnSpec[] {
 				FormSpecs.DEFAULT_COLSPEC,
 				FormSpecs.RELATED_GAP_COLSPEC,
@@ -128,17 +134,20 @@ public class TelaPrincipal {
 			new RowSpec[] {
 				FormSpecs.DEFAULT_ROWSPEC,
 				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
+				RowSpec.decode("default:grow"),
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				FormSpecs.DEFAULT_ROWSPEC,
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				RowSpec.decode("451px:grow"),}));
 		
+		JSplitPane splitPane = new JSplitPane();
+		panel.add(splitPane, "3, 3, fill, fill");
+		
 		JLabel lblBuscar = new JLabel("Buscar:");
-		panel.add(lblBuscar, "3, 1");
+		splitPane.setLeftComponent(lblBuscar);
 		
 		textField = new JTextField();
-		panel.add(textField, "3, 5, fill, default");
+		splitPane.setRightComponent(textField);
 		textField.setColumns(10);
 
 		final JList list = new JList();
@@ -158,7 +167,17 @@ public class TelaPrincipal {
 				// TODO Auto-generated method stub
 				
 				if(textField.getText()!=""){
-					List<String> paths = new Buscador().buscaComParser(textField.getText(), pathIndice.getText());
+					List<String> paths = null;
+					try {
+						paths = new Buscador().buscaComParser(textField.getText(), pathIndice.getText());
+					} catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						JOptionPane.showMessageDialog(null, "Informe um valor para busca", "ATENÇÃO", JOptionPane.ERROR_MESSAGE);
+						e1.printStackTrace();
+					}catch (IOException e2) {
+						// TODO: handle exception
+						JOptionPane.showMessageDialog(null, "Esta pasta não contém Indices!", "ATENÇÃO", JOptionPane.ERROR_MESSAGE);
+					}
 					DefaultListModel<String> model = new DefaultListModel<>();
 					for (String string : paths) {
 						model.addElement(string);
@@ -169,7 +188,7 @@ public class TelaPrincipal {
 			}
 		});
 		
-		panel.add(btnOk, "5, 5, center, top");
+		panel.add(btnOk, "5, 3, center, top");
 
 
 		

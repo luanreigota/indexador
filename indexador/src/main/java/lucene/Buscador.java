@@ -1,5 +1,6 @@
 package lucene;
 
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +9,9 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
+import org.apache.lucene.index.IndexNotFoundException;
 import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
@@ -17,10 +20,9 @@ import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.FSDirectory;
 
 public class Buscador {
-//	private String diretorioDoIndice = System.getProperty("user.home") + "/indice";
 
-	public List<String> buscaComParser(String parametro, String diretorioDoIndice) {
-		try {
+	public List<String> buscaComParser(String parametro, String diretorioDoIndice) throws IndexNotFoundException, IOException, ParseException{
+//		try {
 			List<String> paths = new ArrayList<>();
 			// {1}
 			IndexReader leitor = DirectoryReader.open(FSDirectory.open(Paths.get(diretorioDoIndice)));
@@ -42,23 +44,20 @@ public class Buscador {
 			// {5}
 			for (ScoreDoc sd : resultado.scoreDocs) {
 				Document documento = buscador.doc(sd.doc);
-//				System.out.println("Caminho:" + documento.get("caminho"));
 				System.out.println(documento.get("caminho"));
 				paths.add(documento.get("caminho"));
-//				System.out.println("Ultima modificacao:" + documento.get("UltimaModificacao"));
-//				System.out.println("Score:" + sd.score);
-//				System.out.println("--------");
 			}
 			leitor.close();
 			return paths;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			System.out.println("aqui");
+//			return null;
+//		}
 	}
 
-	public static void main(String[] args) {
-		Buscador b = new Buscador();
+//	public static void main(String[] args) {
+//		Buscador b = new Buscador();
 //		String parametro = "$conn_DP || "
 //						+ "$conn_base_parlamentar ||"
 //						+ "$conn_cmrj_web ||"
@@ -73,5 +72,5 @@ public class Buscador {
 		String parametro = "inativo";
 						
 //		b.buscaComParser(parametro);
-	}
+//	}
 }

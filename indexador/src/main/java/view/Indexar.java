@@ -26,8 +26,6 @@ import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 
 public class Indexar extends JDialog {
-
-	private JList list = new JList();
 	private JTextField textPastaParaIndexar;
 	private JTextField textPastaDosIndices;
 	/**
@@ -57,9 +55,6 @@ public class Indexar extends JDialog {
 
 		getContentPane().add(tabbedPane, BorderLayout.CENTER);
 
-		JPanel selecExtencao = new JPanel();
-		tabbedPane.addTab("Selecionar Exten��o", null, selecExtencao, null);
-
 		DefaultListModel model = new DefaultListModel();
 		model.addElement(".php");
 		model.addElement(".txt");
@@ -67,39 +62,17 @@ public class Indexar extends JDialog {
 		model.addElement(".doc");
 		model.addElement(".asp");
 		model.addElement(".java");
-		selecExtencao.setLayout(new FormLayout(new ColumnSpec[] {
-				ColumnSpec.decode("284px"),
-				ColumnSpec.decode("255px"),
-				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
-				ColumnSpec.decode("30px"),},
-			new RowSpec[] {
-				FormSpecs.LINE_GAP_ROWSPEC,
-				RowSpec.decode("14px"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,}));
-		
-				JLabel titleSelectExtencao = DefaultComponentFactory.getInstance()
-						.createTitle("Selecione as exten\u00E7\u00F5es que deseja indexar");
 				GridBagConstraints gbc_titleSelectExtencao = new GridBagConstraints();
 				gbc_titleSelectExtencao.insets = new Insets(0, 0, 5, 5);
 				gbc_titleSelectExtencao.anchor = GridBagConstraints.WEST;
 				gbc_titleSelectExtencao.gridx = 2;
 				gbc_titleSelectExtencao.gridy = 0;
-				selecExtencao.add(titleSelectExtencao, "2, 4, left, top");
 				GridBagConstraints gbc_list = new GridBagConstraints();
 				gbc_list.insets = new Insets(0, 0, 0, 5);
 				gbc_list.gridx = 3;
 				gbc_list.gridy = 1;
-				selecExtencao.add(list, "2, 8, left, center");
-				
-						list.setModel(model);
-						list.setFixedCellWidth(100);
-		tabbedPane.setEnabledAt(0, false);
 
+		
 		JPanel selecPastaParaIndexar = new JPanel();
 		tabbedPane.addTab("Selecionar pasta para Indexar", null, selecPastaParaIndexar, null);
 		selecPastaParaIndexar.setLayout(new FormLayout(new ColumnSpec[] {
@@ -145,7 +118,7 @@ public class Indexar extends JDialog {
 			}
 		});
 		selecPastaParaIndexar.add(btnSelecPasta, "4, 14");
-		tabbedPane.setEnabledAt(1, false);
+		tabbedPane.setEnabledAt(0, false);
 
 		JPanel selecPastaDosIndices = new JPanel();
 		tabbedPane.addTab("Selecionar pasta dos indices", null, selecPastaDosIndices, null);
@@ -192,7 +165,7 @@ public class Indexar extends JDialog {
 			}
 		});
 		selecPastaDosIndices.add(buttonSelecPastaIndice, "4, 14, left, top");
-		tabbedPane.setEnabledAt(2, false);
+		tabbedPane.setEnabledAt(1, false);
 
 		// }
 
