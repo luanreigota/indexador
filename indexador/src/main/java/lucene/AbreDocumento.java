@@ -1,7 +1,9 @@
 package lucene;
 
+import java.awt.Desktop;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.io.IOException;
 
 import javax.swing.JList;
@@ -17,7 +19,8 @@ public class AbreDocumento implements MouseListener {
 			System.out.println(list.getModel().getElementAt(index));
 			try {
 //				Runtime.getRuntime().exec
-				Runtime.getRuntime().exec(list.getModel().getElementAt(index).toString());
+//				Runtime.getRuntime().exec(list.getModel().getElementAt(index).toString());
+				Desktop.getDesktop().open(new File(list.getModel().getElementAt(index).toString()));
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

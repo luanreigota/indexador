@@ -20,9 +20,9 @@ class Analisador extends SimpleFileVisitor<Path> {
 	@Override
 	public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
 		// TODO Auto-generated method stub
-		if (file.toFile().getName().toLowerCase().endsWith(".php")) {
+//		if (file.toFile().getName().toLowerCase().endsWith(".php")) {
 			indexator.indexarArquivo(file.toFile());
-		}
+//		}
 		return FileVisitResult.CONTINUE;
 	}
 
