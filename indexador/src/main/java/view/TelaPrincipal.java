@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 import com.jgoodies.forms.layout.FormLayout;
@@ -170,6 +171,7 @@ public class TelaPrincipal {
 					List<String> paths = null;
 					try {
 						paths = new Buscador().buscaComParser(textField.getText(), pathIndice.getText());
+						Collections.sort(paths);
 					} catch (ParseException e1) {
 						// TODO Auto-generated catch block
 						JOptionPane.showMessageDialog(null, "Informe um valor para busca", "ATENÇÃO", JOptionPane.ERROR_MESSAGE);
