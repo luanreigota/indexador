@@ -57,6 +57,7 @@ public class Indexator {
 		try (InputStream stream = Files.newInputStream(arquivo.toPath())) {
 			SimpleDateFormat formatador = new SimpleDateFormat("yyyyMMdd");
 
+			
 			System.out.println(arquivo.getAbsolutePath());
 
 			Document document = new Document();
